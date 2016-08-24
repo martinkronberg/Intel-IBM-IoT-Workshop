@@ -23,8 +23,8 @@
       "active":true,
       "console":"false",
       "complete":"false",
-      "x":570.5,
-      "y":107,
+      "x":663.5,
+      "y":108,
       "wires":[  
 
       ]
@@ -34,7 +34,7 @@
       "type":"function",
       "z":"8569286b.9941c8",
       "name":"Send above critical delta ",
-      "func":"var D_ID = \"gateway_01\"\nvar crit = 5000;\n\nvar output = {}// Create output object\n\ncontext.array = context.array || [0,0,0]\n\n\ncontext.X = msg.payload[0] // read in X axis value\ncontext.Y = msg.payload[1] // read in Y axis value\ncontext.Z = msg.payload[2] // read in Z axis value\n\n\nif (Math.abs(context.array[0] - context.X.payload) > crit |\n    Math.abs(context.array[1] - context.Y.payload) > crit |\n    Math.abs(context.array[2] - context.Z.payload) > crit)\n    {\n        output.payload = [{\"Device_ID\":D_ID,\"timestamp\":Date.now(),\"X\":context.X.payload,\"Y\":context.Y.payload,\"Z\":context.Z.payload}]\n        context.array = [context.X.payload,context.Y.payload,context.Z.payload]\n        return output\n    }\n\nelse{\n    context.array = [context.X.payload,context.Y.payload,context.Z.payload] //insert x,y,z vlaues into array\n    }\n \n",
+      "func":"var D_ID = \"gateway_01\"\nvar crit = 5000;\n\nvar output = {}// Create output object\n\ncontext.array = context.array || [0,0,0]\n\n\ncontext.X = msg.payload[0] // read in X axis value\ncontext.Y = msg.payload[1] // read in Y axis value\ncontext.Z = msg.payload[2] // read in Z axis value\n\n\nif (Math.abs(context.array[0] - context.X.payload) > crit |\n    Math.abs(context.array[1] - context.Y.payload) > crit |\n    Math.abs(context.array[2] - context.Z.payload) > crit)\n    {\n        output.payload = [{d:{\"Device_ID\":D_ID,\"timestamp\":Date.now(),\"X\":context.X.payload,\"Y\":context.Y.payload,\"Z\":context.Z.payload}}]\n        context.array = [context.X.payload,context.Y.payload,context.Z.payload]\n        return output\n    }\n\nelse{\n    context.array = [context.X.payload,context.Y.payload,context.Z.payload] //insert x,y,z vlaues into array\n    }\n \n",
       "outputs":1,
       "noerr":0,
       "x":333.5,
@@ -58,8 +58,8 @@
       "event":"",
       "format":"json",
       "name":"",
-      "x":586.5,
-      "y":167,
+      "x":679.5,
+      "y":168,
       "wires":[  
 
       ]
