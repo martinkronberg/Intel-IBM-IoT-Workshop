@@ -1,0 +1,98 @@
+[  
+   {  
+      "id":"ae0707bf.2adc28",
+      "type":"upm-curieimu",
+      "z":"8569286b.9941c8",
+      "name":"",
+      "mode":"ACCEL",
+      "interval":1000,
+      "x":98.5,
+      "y":107,
+      "wires":[  
+         [  
+            "b4014393.79517",
+            "1d6f3bba.964c74"
+         ]
+      ]
+   },
+   {  
+      "id":"d39d2103.a27f2",
+      "type":"debug",
+      "z":"8569286b.9941c8",
+      "name":"",
+      "active":true,
+      "console":"false",
+      "complete":"false",
+      "x":570.5,
+      "y":107,
+      "wires":[  
+
+      ]
+   },
+   {  
+      "id":"b4014393.79517",
+      "type":"function",
+      "z":"8569286b.9941c8",
+      "name":"Send above critical delta ",
+      "func":"var D_ID = \"gateway_01\"\nvar crit = 5000;\n\nvar output = {}// Create output object\n\ncontext.array = context.array || [0,0,0]\n\n\ncontext.X = msg.payload[0] // read in X axis value\ncontext.Y = msg.payload[1] // read in Y axis value\ncontext.Z = msg.payload[2] // read in Z axis value\n\n\nif (Math.abs(context.array[0] - context.X.payload) > crit |\n    Math.abs(context.array[1] - context.Y.payload) > crit |\n    Math.abs(context.array[2] - context.Z.payload) > crit)\n    {\n        output.payload = [{\"Device_ID\":D_ID,\"timestamp\":Date.now(),\"X\":context.X.payload,\"Y\":context.Y.payload,\"Z\":context.Z.payload}]\n        context.array = [context.X.payload,context.Y.payload,context.Z.payload]\n        return output\n    }\n\nelse{\n    context.array = [context.X.payload,context.Y.payload,context.Z.payload] //insert x,y,z vlaues into array\n    }\n \n",
+      "outputs":1,
+      "noerr":0,
+      "x":333.5,
+      "y":107,
+      "wires":[  
+         [  
+            "d39d2103.a27f2",
+            "a3bcabeb.639fb8"
+         ]
+      ]
+   },
+   {  
+      "id":"a3bcabeb.639fb8",
+      "type":"wiotp out",
+      "z":"8569286b.9941c8",
+      "authType":"d",
+      "qs":"true",
+      "qsDeviceId":"",
+      "deviceType":"",
+      "deviceId":"",
+      "event":"",
+      "format":"json",
+      "name":"",
+      "x":586.5,
+      "y":167,
+      "wires":[  
+
+      ]
+   },
+   {  
+      "id":"e3b29a12.54fae8",
+      "type":"wiotp out",
+      "z":"8569286b.9941c8",
+      "authType":"d",
+      "qs":"true",
+      "qsDeviceId":"",
+      "deviceType":"",
+      "deviceId":"",
+      "event":"",
+      "format":"json",
+      "name":"",
+      "x":593.5,
+      "y":223,
+      "wires":[  
+
+      ]
+   },
+   {  
+      "id":"1d6f3bba.964c74",
+      "type":"Memory",
+      "z":"8569286b.9941c8",
+      "name":"",
+      "x":288.5,
+      "y":225,
+      "wires":[  
+         [  
+            "e3b29a12.54fae8"
+         ]
+      ]
+   }
+]
